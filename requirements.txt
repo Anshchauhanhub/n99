@@ -1,0 +1,7 @@
+selenium
+beautifulsoup4
+loguru
+fastapi
+pydantic
+uvicorn
+lxml
