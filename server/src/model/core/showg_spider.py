@@ -19,18 +19,14 @@ async def movies_showing(name: str, code: str, city: str, date: str) -> list:
             url = f"https://in.bookmyshow.com/cinemas/{city}/{name}/buytickets/{code}/{date}"
             await page.goto(url)
             
-            # Wait for URL to load
             await page.wait_for_url(url, timeout=5000)
             print("Data is available now.\n\nExtracting movie titles...")
             
-            # Wait for specific elements to appear
             await page.wait_for_selector("a.sc-1412vr2-2", timeout=15000)
 
-            # Get the page source and parse with BeautifulSoup as before
             html = await page.content()
             soup = BeautifulSoup(html, "lxml")
 
-            # Extract movie names from the cinema session listing
             movie_titles = soup.find_all("a", class_="sc-1412vr2-2 cPWByY")
             cleaned = clean_titles([tag.text.strip() for tag in movie_titles if tag.text.strip()])
             # print(cleaned)
