@@ -31,6 +31,7 @@ def avail_movies():
         movie_titles = [el.get_attribute("alt").strip() for el in elements if el.get_attribute("alt")]
 
         print(f"Found {len(movie_titles)} movie titles:\n")
+        print(movie_titles[:-9])
         return movie_titles[:-9]  # Exclude the last 9 entries which are not movies
 
     except Exception as e:
@@ -42,9 +43,9 @@ def avail_movies():
 
 if __name__ == "__main__":
     movies = avail_movies()
-    # print(movies)
+    print(movies)
 
     # Save the available movie titles to a txt file
-    with open("./output/available_movies.txt", "w") as f:
-        for title in movies:
-            f.write(title + "\n")
+    # with open("./output/available_movies.txt", "w") as f:
+    #     for title in movies:
+    #         f.write(title + "\n")
