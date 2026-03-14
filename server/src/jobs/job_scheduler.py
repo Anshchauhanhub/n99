@@ -3,9 +3,6 @@ from datetime import datetime
 import uuid
 
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-from apscheduler.triggers.interval import IntervalTrigger
-from apscheduler.triggers.cron import CronTrigger
-from apscheduler.triggers.date import DateTrigger
 
 from src.model.core.showg_spider import movies_showing
 
@@ -63,11 +60,11 @@ if __name__ == "__main__":
             date="20260313"
         )
         
-        # Keep the event loop running
         try:
             while True:
-                await asyncio.sleep(1)
+                pass
         except (KeyboardInterrupt, SystemExit):
-            pass
+            scheduler.shutdown()
+            print("Scheduler stopped.")
 
     asyncio.run(main())
