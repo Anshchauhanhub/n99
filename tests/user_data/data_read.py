@@ -3,7 +3,7 @@ import os
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "../../")))
 
-from server.src.config.pg_config import get_db_connection
+from server.src.config.db_config import get_db_connection
 
 conn = get_db_connection()
 

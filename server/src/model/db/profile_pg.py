@@ -1,6 +1,6 @@
 # Userprofile PostgreSQL operations
 
-from server.src.config.pg_config import get_db_connection
+from server.src.config.db_config import get_db_connection
 
 class ProfilePG:
     def __init__(self):
