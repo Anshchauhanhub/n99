@@ -1,1 +1,0 @@
-# Configuration files to the database connection, environment variables, and other related settings.
