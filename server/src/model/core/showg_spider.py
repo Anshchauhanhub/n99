@@ -48,7 +48,7 @@ def clean_titles(titles):
 
 if __name__ == "__main__":
     async def main():
-        movies = await movies_showing(name="inox-janak-place", code="SCJN", city="national-capital-region-ncr", date="20260313")
+        movies = await movies_showing(name="inox-janak-place", code="SCJN", city="national-capital-region-ncr", date="20260317")
         print(movies)
 
     asyncio.run(main())

@@ -31,8 +31,7 @@ def avail_movies():
 
         movie_titles = [el.get_attribute("alt").strip() for el in elements if el.get_attribute("alt")]
 
-        print(f"Found {len(movie_titles)} movie titles:\n")
-        print(movie_titles[:-9])
+        print("Available movies fetched successfully.")
         return movie_titles[:-9]  # Exclude the last 9 entries which are not movies
 
     except Exception as e:

@@ -7,7 +7,7 @@ uvicorn
 lxml
 apscheduler
 playwright
-psycopg2
+psycopg
 dotenv
 starsessions
 redis
