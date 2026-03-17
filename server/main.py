@@ -1,7 +1,7 @@
 import uvicorn
-from server.src.config.app_config import create_app
-from server.src.router.user_routes import router as user_router
-from server.src.router.api_routes import router as survey_router
+from src.config.app_config import create_app
+from src.router.user_routes import router as user_router
+from src.router.api_routes import router as survey_router
 
 # Create the app ONCE here
 app = create_app()

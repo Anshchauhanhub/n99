@@ -1,26 +1,30 @@
 # Userprofile PostgreSQL operations
 
-from server.src.config.db_config import get_db_connection
+from src.config.db_config import get_db_connection
 
 class ProfilePG:
     def __init__(self):
         self.conn = get_db_connection()
 
-    def create_user_profile(self, username, email, movie, date, cinema):
+    def create_user_profile(self, username, email):
         try:
             with self.conn.cursor() as cur:
+                cur.execute("SELECT user_id FROM user_profile WHERE email = %s;", (email,))
+                existing_user = cur.fetchone()
+                if existing_user:
+                    print(f"User with email {email} already exists in user_profile with user_id {existing_user[0]}.")
+                    return existing_user[0]
+        
                 cur.execute("""
-                WITH inserted_user AS (
-                    INSERT INTO user_profile (username, email)
-                    VALUES (%s, %s)
-                    RETURNING user_id
-                )
-                INSERT INTO user_data (user_id, movie, date, cinema)
-                SELECT user_id, %s, %s, %s FROM inserted_user;
-                """, (username, email, movie, date, cinema))
-
+                INSERT INTO user_profile (username, email)
+                VALUES (%s, %s)
+                RETURNING user_id
+                """, (username, email))
+                
+                returned_id = cur.fetchone()[0]
                 self.conn.commit()
-                print("Inserted user into user_profile.")
+                print(f"Inserted user with user_id {returned_id} into user_profile.")
+                return returned_id
 
         except Exception as e:
             print("Connection failed.")
@@ -29,10 +33,9 @@ class ProfilePG:
     def read_user_profiles(self, user_id: str):
         try:
             with self.conn.cursor() as cur:
-                cur.execute("SELECT * FROM user_profile WHERE user_id = %s;", (user_id,))
-                rows = cur.fetchall()
-                print(f"Fetched user profiles for user_id {user_id}")
-                return rows
+                cur.execute("SELECT COUNT(*) FROM user_profile WHERE user_id = %s;", (user_id,))
+                count = cur.fetchone()[0]
+                return count
 
         except Exception as e:
             print("Connection failed.")
@@ -84,5 +87,7 @@ if __name__ == "__main__":
     profile_pg = ProfilePG()
 
     # Example usage
-    data = profile_pg.read_user_profiles("17")
-    print(data)
+    # data = profile_pg.read_user_profiles("17")
+    # print(data)
+
+    insert_data = profile_pg.create_user_profile("TSR", "tushar@outlook.com")

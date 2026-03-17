@@ -10,13 +10,13 @@ import redis.asyncio as redis
 
 dotenv.load_dotenv()
 
+redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+redis_client = redis.from_url(redis_url, decode_responses=True)
+
 def create_app() -> FastAPI:
     app = FastAPI()
 
     # Configure Redis for session management
-    redis_url = os.getenv("REDIS_URL")
-    redis_client = redis.from_url(redis_url)
-    
     app.add_middleware(
         SessionMiddleware,
         store=RedisStore(connection=redis_client),

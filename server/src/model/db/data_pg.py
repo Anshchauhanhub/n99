@@ -1,21 +1,39 @@
 # Userdata PostgreSQL operations
 
-from server.src.config.db_config import get_db_connection
+from src.config.db_config import get_db_connection
+import uuid
 
 class DataPG:
     def __init__(self):
         self.conn = get_db_connection()
 
-    def create_user_data(self, user_id, movie, date, cinema):
+    def create_user_data(self, user_id, movie, date, cinema, job_id):
         try:
             with self.conn.cursor() as cur:
-                cur.execute("""
-                INSERT INTO user_data (user_id, movie, date, cinema)
-                VALUES (%s, %s, %s, %s);
-                """, (user_id, movie, date, cinema))
+                cur.execute("SELECT job_id FROM user_data WHERE movie = %s AND date = %s AND cinema = %s;", (movie, date, cinema))
+                existing_data = cur.fetchone()
+                
+                if existing_data:
+                    ref_job_id = existing_data[0]
+                    print("User data already exists in user_data. Inserting data in to linked_data instead.")
+                    cur.execute("""
+                    INSERT INTO linked_data (user_id, job_id)
+                    VALUES (%s, %s);
+                    """, (user_id, ref_job_id))
 
-                self.conn.commit()
-                print("Inserted user data into user_data.")
+                    self.conn.commit()
+                    print("Inserted user data into linked_data.")
+                    return
+                
+                else:
+                    cur.execute("""
+                    INSERT INTO user_data (user_id, movie, date, cinema, job_id)
+                    VALUES (%s, %s, %s, %s, %s);
+                    """, (user_id, movie, date, cinema, job_id))
+
+                    self.conn.commit()
+                    print("Inserted user data into user_data.")
+                    return
 
         except Exception as e:
             print("Connection failed.")
@@ -75,9 +93,8 @@ class DataPG:
 
 if __name__ == "__main__":
     data_pg = DataPG()
-    # data_pg.create_user_data("17", "Hoppers", "2026-03-23", "Vegas Mall")
-    data = data_pg.read_user_data("17")
-    print(data)
+    data_pg.create_user_data("22", "Hoppers", "2026-03-23", "Vegas Mall", str(uuid.uuid4()))
+    # data = data_pg.read_user_data("17")
     # data_pg.update_user_data("17", "Updated Movie", "2026-03-23", "Updated Cinema")
     # data_pg.delete_user_data("17")
     data_pg.connection_close()
