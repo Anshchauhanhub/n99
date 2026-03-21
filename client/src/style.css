@@ -59,13 +59,13 @@ body {
 }
 
 .folder-shoulder {
-  width: 140px; 
-  height: 44px;
+  width: 160px; 
+  height: 46px;
   background: #FFFFFF;
   border: 2px solid var(--btn-color);
-  border-bottom: 2px solid #FFFFFF;
+  border-bottom: none;
   border-radius: 12px 12px 0 0;
-  margin-right: 8px; /* Gap between shoulder and tabs */
+  margin-right: 8px; 
 }
 
 .folder-tabs {
@@ -79,7 +79,7 @@ body {
   border: 2px solid transparent;
   border-radius: 10px 10px 0 0;
   padding: 8px 24px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 700;
   color: var(--text-dark);
   cursor: pointer;
@@ -92,31 +92,30 @@ body {
 
 .tab.active {
   border: 2px solid var(--btn-color);
-  border-bottom: 2px solid #FFFFFF;
+  border-bottom: none;
   background-color: #FFFFFF;
-  height: 44px; 
+  height: 46px; 
   border-radius: 12px 12px 0 0;
   z-index: 3;
 }
 
 .tab:not(.active) {
-  background-color: #FFFFFF;
+  background-color: #f7f7f7;
   margin-bottom: 6px; 
-  border-radius: 10px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 .folder-content {
   background: #FFFFFF;
   border: 2px solid var(--btn-color);
-  border-radius: 12px;
-  padding: 28px;
+  border-radius: 0 12px 12px 12px;
+  padding: 30px;
   position: relative;
   z-index: 1;
   min-height: 420px;
   display: flex;
   flex-direction: column;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.05);
 }
 
 /* --- Tab Switching --- */
