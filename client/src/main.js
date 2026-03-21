@@ -1,5 +1,4 @@
-// Replace with your actual backend URL
-const BASE_URL = 'http://localhost:3000/api'; 
+// ...existing code...
 let currentTempKey = null;
 
 // --- Tab Navigation Logic ---
@@ -49,7 +48,7 @@ document.getElementById('tracking-form').addEventListener('submit', async (e) =>
 
   try {
     // ⚠️ Uncomment when backend is ready
-    const res = await fetch(`${BASE_URL}/movie-selection`, {
+    const res = await fetch(`/movie-selection`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -99,7 +98,7 @@ document.getElementById('profile-form').addEventListener('submit', async (e) => 
 
   try {
     // ⚠️ Uncomment when backend is ready
-    await fetch(`${BASE_URL}/user-profile`, {
+    await fetch(`/user-profile`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload)
@@ -127,10 +126,24 @@ document.getElementById('profile-form').addEventListener('submit', async (e) => 
 });
 
 // --- API 3 & 4: Keep-Alive Schedulers (Using Web Worker) ---
-if (window.Worker) {
-  // Initialize the worker from the public folder
-  const schedulerWorker = new Worker('/worker.js');
-  console.log('Background schedulers running in Web Worker.');
-} else {
-  console.warn('Web Workers not supported in this browser. Schedulers may throttle.');
+async function startKeepAlive() {
+  try {
+    fetch('/api/active-scheduler', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      keepalive: true
+    });
+  } catch (error) {
+    console.error('Error triggering active scheduler:', error);
+  }
+
+  try {
+    fetch('/api/lazy-scheduler', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      keepalive: true
+    });
+  } catch (error) {
+    console.error('Error triggering lazy scheduler:', error);
+  }
 }

@@ -14,7 +14,7 @@
         <div class="folder-shoulder"></div>
         <div class="folder-tabs">
           <button class="tab active" data-target="home">Track</button>
-          <button class="tab" data-target="history">History</button>
+          <!-- <button class="tab" data-target="history">History</button> -->
           <button class="tab" data-target="profile">Profile</button>
         </div>
       </div>
@@ -53,19 +53,6 @@
 
         <section id="profile" class="tab-pane">
           <div class="profile-card">
-            <div class="profile-header">
-              <div class="avatar">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                  <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-              </div>  
-              <div class="user-info">
-                <div class="info-line">-</div>
-                <div class="info-line">-</div>
-              </div>
-            </div>
-
             <form id="profile-form">
               <div class="input-group">
                 <label for="username">Username</label>
@@ -81,25 +68,6 @@
             </form>
             <p id="profile-status" class="status-msg"></p>
           </div>
-        </section>
-
-        <section id="history" class="tab-pane">
-          <div class="history-header">
-            <h2 class="history-title">Your Watch History</h2>
-            <span class="count-badge">0 films</span>
-          </div>
-          
-          <div class="empty-history">
-            <div class="add-circle">
-              <span class="plus-icon">+</span>
-            </div>
-            <h3>No movies tracked yet.</h3>
-            <p>Head to <span class="accent-text">Track</span> to add your first!</p>
-          </div>
-
-          <ul id="history-list" style="display: none;">
-            <!-- Real history items will go here -->
-          </ul>
         </section>
 
       </main>
