@@ -62,18 +62,19 @@ def add_new_job(job_id, start_date, **kwargs):
         if scheduler.get_job(job_id):
             logger.info(f"Job {job_id} already exists. Skipping creation.")
 
-        # Add the job to the scheduler
-        new_job = scheduler.add_job(
-            scheduling_task,
-            'interval',
-            id=job_id,
-            minutes=1,
-            start_date=start_date,
-            next_run_time=datetime.now(),
-            kwargs=kwargs
-        )
-        logger.info(f"Successfully added Job: {job_id}")
-        return new_job
+            # Add the job to the scheduler
+            new_job = scheduler.add_job(
+                scheduling_task,
+                'interval',
+                id=job_id,
+                hours=6,
+                start_date=start_date,
+                next_run_time=datetime.now(),
+                kwargs=kwargs
+            )
+            logger.info(f"Successfully added Job: {job_id}")
+            return new_job
+            
     except Exception as e:
         logger.error(f"Error adding job {job_id}: {e}")
 
@@ -136,7 +137,10 @@ def reverse_lookup(cinema_var):
 
 async def main():
     try:
-        scheduler.start()
+        if not scheduler.running:
+            scheduler.start()
+        else:
+            return
 
         movie_mapped_data, job_data = data_mappg(data_pg.find_job())
 

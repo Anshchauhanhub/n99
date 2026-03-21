@@ -36,9 +36,17 @@ def avail_movies_task():
 
 def start_scheduler():
     """Starts the scheduler and adds the movie availability task."""
-    scheduler.add_job(avail_movies_task, 'interval', days=2, next_run_time=datetime.now())
+    if scheduler.running:
+        logger.info("Lazy scheduler is already running.")
+        return
+    scheduler.add_job(
+        avail_movies_task, 
+        'interval', 
+        days=2, 
+        next_run_time=datetime.now()
+    )
     scheduler.start()
-    logger.info("Scheduler started. Movie availability will be checked every hour.")
+    logger.info("Scheduler started. Movie availability will be checked every 2 days.")
 
 if __name__ == "__main__":
     start_scheduler()
