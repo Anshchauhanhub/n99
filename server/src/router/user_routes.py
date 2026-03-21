@@ -30,9 +30,6 @@ async def health_check():
 
 @router.post("/movie-selection")
 async def save_movie_selection(data: MovieSelection):
-    logger.info("Movie selection endpoint was called (Page 1).")
-    
-    # 1. Store movie name, date, cinema & job_id in Redis with a temporary key
     job_id = str(uuid.uuid4())
     temp_key = str(uuid.uuid4())
     movie_info = {
@@ -46,11 +43,11 @@ async def save_movie_selection(data: MovieSelection):
     await redis_client.setex(temp_key, 1800, json.dumps(movie_info))
 
     # Return the temporary key so the frontend can send it on Page 2
-    return temp_key
+    return {"temp_key": temp_key}
 
 @router.post("/user-profile")
 async def complete_user_registration(data: UserProfileRequest, response: Response, request: Request):
-    logger.info("User profile endpoint was called (Page 2).")
+    logger.info(f"Received data: {data}")
 
     # Check for session_token cookie
     session_token = request.cookies.get("session_token")
@@ -61,6 +58,7 @@ async def complete_user_registration(data: UserProfileRequest, response: Respons
     
     # Fetch movie data from Redis using the temporary key
     movie_info_str = await redis_client.get(data.temp_key)
+    logger.info(f"Movie info from Redis: {movie_info_str}")
     if not movie_info_str:
         raise HTTPException(status_code=400, detail="Temporary session expired or invalid.")
     movie_info = json.loads(movie_info_str)
