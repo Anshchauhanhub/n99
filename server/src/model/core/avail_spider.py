@@ -1,8 +1,12 @@
+<<<<<<< HEAD
 import os
+=======
+>>>>>>> 02ebd9fa4609f99934bb266dfcdc45934b099795
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+<<<<<<< HEAD
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 
@@ -32,6 +36,22 @@ def create_driver():
 
 def avail_movies():
     driver = create_driver()
+=======
+
+from loguru import logger
+
+# Configure headless Chrome
+options = webdriver.ChromeOptions()
+options.add_argument("--disk-cache-size=0")
+options.add_argument("--headless=new")
+options.add_argument("--no-sandbox")
+options.add_argument("--disable-dev-shm-usage")
+options.add_argument("--window-size=1920,1080")
+options.add_argument("user-agent=Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36")
+
+def avail_movies():
+    driver = webdriver.Chrome(options=options)
+>>>>>>> 02ebd9fa4609f99934bb266dfcdc45934b099795
 
     try:
         url = "https://www.inoxmovies.com/"
@@ -63,9 +83,12 @@ if __name__ == "__main__":
     movies = avail_movies()
     print(movies)
 
+<<<<<<< HEAD
     # driver = create_driver()
     # print(driver)
 
+=======
+>>>>>>> 02ebd9fa4609f99934bb266dfcdc45934b099795
     # Save the available movie titles to a txt file
     # with open("./output/available_movies.txt", "w") as f:
     #     for title in movies:

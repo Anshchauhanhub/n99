@@ -10,7 +10,12 @@ import redis.asyncio as redis
 
 dotenv.load_dotenv()
 
+<<<<<<< HEAD
 redis_client = redis.from_url(os.getenv("REDIS_URL"), decode_responses=True)
+=======
+redis_url = os.getenv("REDIS_URL", "redis://localhost:6379")
+redis_client = redis.from_url(redis_url, decode_responses=True)
+>>>>>>> 02ebd9fa4609f99934bb266dfcdc45934b099795
 
 def create_app(lifespan=None) -> FastAPI:
     app = FastAPI(lifespan=lifespan)
@@ -25,16 +30,21 @@ def create_app(lifespan=None) -> FastAPI:
     # CORS configuration
     app.add_middleware(
         CORSMiddleware,
+<<<<<<< HEAD
         allow_origins=[
             "https://iam-tsr.github.io/n99/",
             "http://localhost:5173",
             "http://127.0.0.1:5173",
         ],
+=======
+        allow_origins=["https://iam-tsr.github.io/n99"],
+>>>>>>> 02ebd9fa4609f99934bb266dfcdc45934b099795
         allow_credentials=True,
         allow_methods=["*"],
         allow_headers=["*"],
     )
 
+<<<<<<< HEAD
     return app
 
 
@@ -49,3 +59,6 @@ if __name__ == "__main__":
 
     import asyncio
     asyncio.run(main())
+=======
+    return app
+>>>>>>> 02ebd9fa4609f99934bb266dfcdc45934b099795
