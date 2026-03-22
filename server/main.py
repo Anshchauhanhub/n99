@@ -20,12 +20,9 @@ app = create_app(lifespan=lifespan)
 app.include_router(user_router)
 app.include_router(survey_router)
 
-<<<<<<< HEAD
 @app.get("/health")
 async def health_check():
     return {"status": "ok"}
 
-=======
->>>>>>> 02ebd9fa4609f99934bb266dfcdc45934b099795
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8000)
