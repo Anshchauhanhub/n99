@@ -114,11 +114,7 @@ async function populateDropdowns() {
   cinemaSelect = new CustomSelect('cinema-dropdown', 'cinema');
 
   try {
-<<<<<<< HEAD
     const moviesRes = await fetch(`${API_BASE_URL}/api/listed-movies`, { method: 'GET' });
-=======
-    const moviesRes = await fetch(`${API_BASE_URL}/api/listed-movies`, { method: 'POST' });
->>>>>>> 02ebd9fa4609f99934bb266dfcdc45934b099795
     const moviesData = await moviesRes.json();
     movieSelect.setOptions(moviesData.movies || []);
   } catch (error) {
@@ -126,11 +122,7 @@ async function populateDropdowns() {
   }
 
   try {
-<<<<<<< HEAD
     const cinemasRes = await fetch(`${API_BASE_URL}/api/listed-cinemas`, { method: 'GET' });
-=======
-    const cinemasRes = await fetch(`${API_BASE_URL}/api/listed-cinemas`, { method: 'POST' });
->>>>>>> 02ebd9fa4609f99934bb266dfcdc45934b099795
     const cinemasData = await cinemasRes.json();
     cinemaSelect.setOptions(cinemasData.cinemas || []);
   } catch (error) {
