@@ -19,8 +19,9 @@ def create_app(lifespan=None) -> FastAPI:
     app.add_middleware(
         SessionMiddleware,
         store=RedisStore(connection=redis_client),
-        # secret_key=os.getenv("SESSION_SECRET_KEY")
+        secret_key=os.getenv("SESSION_SECRET_KEY")
     )
+
 
     # CORS configuration
     app.add_middleware(
